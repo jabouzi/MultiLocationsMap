@@ -13,6 +13,9 @@
 		D38B24551B6BC58E00FB29F3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D38B24541B6BC58E00FB29F3 /* Images.xcassets */; };
 		D38B24581B6BC58E00FB29F3 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D38B24561B6BC58E00FB29F3 /* LaunchScreen.xib */; };
 		D38B24641B6BC58E00FB29F3 /* AllConnectRouteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38B24631B6BC58E00FB29F3 /* AllConnectRouteTests.swift */; };
+		D38B246E1B6BC5F700FB29F3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D38B246D1B6BC5F700FB29F3 /* MapKit.framework */; };
+		D38B24711B6BC63700FB29F3 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38B24701B6BC63700FB29F3 /* Event.swift */; };
+		D38B24731B6BC91E00FB29F3 /* EventAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38B24721B6BC91E00FB29F3 /* EventAnnotation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +39,9 @@
 		D38B245D1B6BC58E00FB29F3 /* AllConnectRouteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AllConnectRouteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D38B24621B6BC58E00FB29F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D38B24631B6BC58E00FB29F3 /* AllConnectRouteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllConnectRouteTests.swift; sourceTree = "<group>"; };
+		D38B246D1B6BC5F700FB29F3 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		D38B24701B6BC63700FB29F3 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		D38B24721B6BC91E00FB29F3 /* EventAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAnnotation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D38B246E1B6BC5F700FB29F3 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,6 +67,8 @@
 			isa = PBXGroup;
 			children = (
 				D38B244A1B6BC58E00FB29F3 /* AllConnectRoute */,
+				D38B244B1B6BC58E00FB29F3 /* Supporting Files */,
+				D38B246F1B6BC5FE00FB29F3 /* Frameworks */,
 				D38B24601B6BC58E00FB29F3 /* AllConnectRouteTests */,
 				D38B24491B6BC58E00FB29F3 /* Products */,
 			);
@@ -80,9 +89,8 @@
 				D38B244D1B6BC58E00FB29F3 /* AppDelegate.swift */,
 				D38B244F1B6BC58E00FB29F3 /* ViewController.swift */,
 				D38B24511B6BC58E00FB29F3 /* Main.storyboard */,
-				D38B24541B6BC58E00FB29F3 /* Images.xcassets */,
-				D38B24561B6BC58E00FB29F3 /* LaunchScreen.xib */,
-				D38B244B1B6BC58E00FB29F3 /* Supporting Files */,
+				D38B24701B6BC63700FB29F3 /* Event.swift */,
+				D38B24721B6BC91E00FB29F3 /* EventAnnotation.swift */,
 			);
 			path = AllConnectRoute;
 			sourceTree = "<group>";
@@ -90,9 +98,12 @@
 		D38B244B1B6BC58E00FB29F3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D38B24541B6BC58E00FB29F3 /* Images.xcassets */,
+				D38B24561B6BC58E00FB29F3 /* LaunchScreen.xib */,
 				D38B244C1B6BC58E00FB29F3 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			path = AllConnectRoute;
 			sourceTree = "<group>";
 		};
 		D38B24601B6BC58E00FB29F3 /* AllConnectRouteTests */ = {
@@ -110,6 +121,14 @@
 				D38B24621B6BC58E00FB29F3 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D38B246F1B6BC5FE00FB29F3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D38B246D1B6BC5F700FB29F3 /* MapKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -213,6 +232,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D38B24501B6BC58E00FB29F3 /* ViewController.swift in Sources */,
+				D38B24731B6BC91E00FB29F3 /* EventAnnotation.swift in Sources */,
+				D38B24711B6BC63700FB29F3 /* Event.swift in Sources */,
 				D38B244E1B6BC58E00FB29F3 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
