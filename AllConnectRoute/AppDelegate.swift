@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -44,3 +45,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+extension CLLocationCoordinate2D {
+    var location: CLLocation {
+        return CLLocation(latitude: latitude, longitude: longitude)
+    }
+}
+
+func ==(lhs: CLLocationCoordinate2D, rhs: CLLocationCoordinate2D) -> Bool {
+    if lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude {
+        return true
+    }
+    return false
+}

@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     
     private let locationManager = CLLocationManager()
     private var events = [Event]()
+    private var coordinates = [CLLocationCoordinate2D]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,10 +56,37 @@ class ViewController: UIViewController {
                 println("Error getting directions: \(error.localizedDescription)")
             } else {
                 let route = directionsResponse.routes[0] as! MKRoute
-                self.mapView.removeOverlays(self.mapView.overlays)
                 self.mapView.addOverlay(route.polyline)
+                
+                let closestLocation = self.getClosestLocation(toLocationCoord, locations: self.coordinates)
+                if let closest = closestLocation {
+                    self.getDirections(fromLocationCoord: toLocationCoord, toLocationCoord: closest)
+                }
+                
+                self.coordinates = self.coordinates.filter() {
+                    if $0.latitude == toLocationCoord.latitude && $0.longitude == toLocationCoord.longitude {
+                        return false
+                    }
+                    return true
+                }
             }
         }
+    }
+    
+    private func getClosestLocation(location: CLLocationCoordinate2D, locations: [CLLocationCoordinate2D]) -> CLLocationCoordinate2D? {
+        var closestLocation: (distance: Double, coordinates: CLLocationCoordinate2D)?
+        
+        for loc in locations {
+            let distance = round(location.location.distanceFromLocation(loc.location)) as Double
+            if closestLocation == nil {
+                closestLocation = (distance, loc)
+            } else {
+                if distance < closestLocation!.distance {
+                    closestLocation = (distance, loc)
+                }
+            }
+        }
+        return closestLocation?.coordinates
     }
     
     private func focusMapViewToShowAllAnnotations() {
@@ -98,8 +126,12 @@ extension ViewController: MKMapViewDelegate {
     
     func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
         focusMapViewToShowAllAnnotations()
+        mapView.removeOverlays(mapView.overlays)
         
-        let event = events[1]
-        getDirections(fromLocationCoord: userLocation.coordinate, toLocationCoord: event.coordinates)
+        coordinates = events.map({ $0.coordinates })
+        let closestLocation = getClosestLocation(userLocation.coordinate, locations: coordinates)
+        if let closest = closestLocation {
+            getDirections(fromLocationCoord: userLocation.coordinate, toLocationCoord: closest)
+        }
     }
 }
