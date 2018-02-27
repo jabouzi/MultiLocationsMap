@@ -13,9 +13,9 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     
-    private let locationManager = CLLocationManager()
-    private var events = [Event]()
-    private var coordinates = [CLLocationCoordinate2D]()
+    let locationManager = CLLocationManager()
+    var events = [Event]()
+    var coordinates = [CLLocationCoordinate2D]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,9 +27,9 @@ class ViewController: UIViewController {
         mapView.showsUserLocation = true
         
         // create event objects
-        let event1 = Event(latitude: 33.856878, longitude: -118.030318)
-        let event2 = Event(latitude: 33.8037266, longitude: -118.122265)
-        let event3 = Event(latitude: 33.8084035, longitude: -118.0736853)
+        let event1 = Event(latitude: 46.3546803, longitude: -72.5837866)
+        let event2 = Event(latitude: 45.5369442, longitude: -73.5107131)
+        let event3 = Event(latitude: 45.6066487, longitude: -73.712409)
         events = [event1, event2, event3]
         
         // add annotations
@@ -41,43 +41,38 @@ class ViewController: UIViewController {
         mapView.addAnnotations(annotations)
     }
     
-    private func getDirections(#fromLocationCoord: CLLocationCoordinate2D, toLocationCoord: CLLocationCoordinate2D) {
+    fileprivate func getDirections(_ fromLocationCoord: CLLocationCoordinate2D, _ toLocationCoord: CLLocationCoordinate2D) {
         let fromLocationMapItem = MKMapItem(placemark: MKPlacemark(coordinate: fromLocationCoord, addressDictionary: nil))
         let toLocationMapItem = MKMapItem(placemark: MKPlacemark(coordinate: toLocationCoord, addressDictionary: nil))
         
         let directionsRequest = MKDirectionsRequest()
-        directionsRequest.transportType = .Automobile
-        directionsRequest.setSource(fromLocationMapItem)
-        directionsRequest.setDestination(toLocationMapItem)
+        directionsRequest.transportType = .automobile
+        directionsRequest.source = fromLocationMapItem
+        directionsRequest.destination = toLocationMapItem
         
         let directions = MKDirections(request: directionsRequest)
-        directions.calculateDirectionsWithCompletionHandler { (directionsResponse, error) -> Void in
+        directions.calculate { (directionsResponse, error) -> Void in
             if let error = error {
-                println("Error getting directions: \(error.localizedDescription)")
+                print("Error getting directions: \(error.localizedDescription)")
             } else {
-                let route = directionsResponse.routes[0] as! MKRoute
-                self.mapView.addOverlay(route.polyline)
+                let route = directionsResponse?.routes[0] as! MKRoute
+                self.mapView.add(route.polyline)
                 
                 let closestLocation = self.getClosestLocation(toLocationCoord, locations: self.coordinates)
                 if let closest = closestLocation {
-                    self.getDirections(fromLocationCoord: toLocationCoord, toLocationCoord: closest)
+                    self.getDirections(toLocationCoord, closest)
                 }
                 
-                self.coordinates = self.coordinates.filter() {
-                    if $0.latitude == toLocationCoord.latitude && $0.longitude == toLocationCoord.longitude {
-                        return false
-                    }
-                    return true
-                }
+                self.coordinates = self.coordinates.filter({ $0 != toLocationCoord })
             }
         }
     }
     
-    private func getClosestLocation(location: CLLocationCoordinate2D, locations: [CLLocationCoordinate2D]) -> CLLocationCoordinate2D? {
+    fileprivate func getClosestLocation(_ location: CLLocationCoordinate2D, locations: [CLLocationCoordinate2D]) -> CLLocationCoordinate2D? {
         var closestLocation: (distance: Double, coordinates: CLLocationCoordinate2D)?
         
         for loc in locations {
-            let distance = round(location.location.distanceFromLocation(loc.location)) as Double
+            let distance = round(location.location.distance(from: loc.location)) as Double
             if closestLocation == nil {
                 closestLocation = (distance, loc)
             } else {
@@ -89,7 +84,7 @@ class ViewController: UIViewController {
         return closestLocation?.coordinates
     }
     
-    private func focusMapViewToShowAllAnnotations() {
+    fileprivate func focusMapViewToShowAllAnnotations() {
         mapView.showAnnotations(mapView.annotations, animated: true)
     }
     
@@ -97,41 +92,41 @@ class ViewController: UIViewController {
 
 // MARK: - MKMapViewDelegate
 extension ViewController: MKMapViewDelegate {
-    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+    func mapView(_ mapView: MKMapView!, viewFor annotation: MKAnnotation!) -> MKAnnotationView! {
         // Don't add a custom image to the user location pin
         if annotation is MKUserLocation {
             return nil
         }
         
         let identifier = "EventLocationIdentifier"
-        var view = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier)
+        var view = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
         if view == nil {
             view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
         } else {
-            view.annotation = annotation
+            view?.annotation = annotation
         }
         return view
     }
     
-    func mapView(mapView: MKMapView!, rendererForOverlay overlay: MKOverlay!) -> MKOverlayRenderer! {
+    func mapView(_ mapView: MKMapView!, rendererFor overlay: MKOverlay!) -> MKOverlayRenderer! {
         let renderer = MKPolylineRenderer(overlay: overlay)
-        renderer.strokeColor = UIColor.blueColor()
+        renderer.strokeColor = UIColor.blue
         renderer.lineWidth = 5
         return renderer
     }
     
-    func mapView(mapView: MKMapView!, didAddAnnotationViews views: [AnyObject]!) {
+    @nonobjc func mapView(_ mapView: MKMapView!, didAddAnnotationViews views: [AnyObject]!) {
         focusMapViewToShowAllAnnotations()
     }
     
-    func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
+    func mapView(_ mapView: MKMapView!, didUpdate userLocation: MKUserLocation!) {
         focusMapViewToShowAllAnnotations()
         mapView.removeOverlays(mapView.overlays)
         
         coordinates = events.map({ $0.coordinates })
         let closestLocation = getClosestLocation(userLocation.coordinate, locations: coordinates)
         if let closest = closestLocation {
-            getDirections(fromLocationCoord: userLocation.coordinate, toLocationCoord: closest)
+            getDirections(userLocation.coordinate, closest)
         }
     }
 }

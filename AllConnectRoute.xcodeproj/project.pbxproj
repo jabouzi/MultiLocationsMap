@@ -180,9 +180,12 @@
 				TargetAttributes = {
 					D38B24471B6BC58E00FB29F3 = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 2Q3M5SLHJL;
+						LastSwiftMigration = 0830;
 					};
 					D38B245C1B6BC58E00FB29F3 = {
 						CreatedOnToolsVersion = 6.4;
+						LastSwiftMigration = 0830;
 						TestTargetID = D38B24471B6BC58E00FB29F3;
 					};
 				};
@@ -363,9 +366,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 2Q3M5SLHJL;
 				INFOPLIST_FILE = AllConnectRoute/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -373,9 +378,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 2Q3M5SLHJL;
 				INFOPLIST_FILE = AllConnectRoute/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -394,6 +401,7 @@
 				INFOPLIST_FILE = AllConnectRouteTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AllConnectRoute.app/AllConnectRoute";
 			};
 			name = Debug;
@@ -409,6 +417,7 @@
 				INFOPLIST_FILE = AllConnectRouteTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AllConnectRoute.app/AllConnectRoute";
 			};
 			name = Release;
@@ -432,6 +441,7 @@
 				D38B24691B6BC58E00FB29F3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D38B246A1B6BC58E00FB29F3 /* Build configuration list for PBXNativeTarget "AllConnectRouteTests" */ = {
 			isa = XCConfigurationList;
@@ -440,6 +450,7 @@
 				D38B246C1B6BC58E00FB29F3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
